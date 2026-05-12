@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Almost There — The Origin Codex</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background: #050b18;
+    color: #f3ead4;
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  body {
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(15, 24, 48, 0.75) 0%, transparent 65%),
+      #050b18;
+    padding: 40px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pending {
+    width: 100%;
+    max-width: 600px;
+    background: linear-gradient(180deg, rgba(15, 24, 48, 0.6) 0%, rgba(8, 16, 32, 0.6) 100%);
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    border-radius: 16px;
+    padding: 52px 44px 40px;
+    text-align: center;
+    box-shadow:
+      0 0 80px rgba(201, 169, 97, 0.05) inset,
+      0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+  .monogram {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 26px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(201, 169, 97, 0.4);
+    box-shadow: 0 0 24px rgba(201, 169, 97, 0.2);
+    background: #050b18;
+  }
+  .monogram img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 3.4px;
+    color: rgba(201, 169, 97, 0.74);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 1.05;
+    letter-spacing: 4px;
+    color: #d4b56e;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: rgba(243, 234, 212, 0.82);
+    margin-bottom: 24px;
+    letter-spacing: 0.3px;
+  }
+  .divider {
+    width: 52px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 169, 97, 0.55), transparent);
+    margin: 0 auto 28px;
+  }
+  .body-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: rgba(243, 234, 212, 0.88);
+    max-width: 480px;
+    margin: 0 auto 28px;
+  }
+  .body-text strong {
+    font-weight: 500;
+    color: #d4b56e;
+    font-style: normal;
+  }
+  .timeline {
+    margin: 28px auto 32px;
+    max-width: 460px;
+    text-align: left;
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    border-radius: 10px;
+    padding: 18px 22px;
+    background: rgba(12, 23, 48, 0.45);
+  }
+  .timeline-row {
+    display: flex;
+    gap: 14px;
+    padding: 8px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: rgba(243, 234, 212, 0.78);
+  }
+  .timeline-row + .timeline-row {
+    border-top: 1px solid rgba(201, 169, 97, 0.12);
+  }
+  .timeline-label {
+    flex-shrink: 0;
+    width: 100px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(201, 169, 97, 0.78);
+    padding-top: 3px;
+  }
+  .timeline-time {
+    font-style: italic;
+  }
+  .note {
+    margin-top: 8px;
+    padding: 18px 22px;
+    border-left: 2px solid rgba(201, 169, 97, 0.4);
+    background: rgba(12, 23, 48, 0.45);
+    border-radius: 0 8px 8px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: rgba(243, 234, 212, 0.74);
+    text-align: left;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .note strong {
+    color: #d4b56e;
+    font-weight: 500;
+    font-style: normal;
+  }
+  .contact {
+    margin-top: 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(243, 234, 212, 0.6);
+  }
+  .contact a {
+    color: rgba(201, 169, 97, 0.85);
+    text-decoration: none;
+  }
+  .contact a:hover { color: #d4b56e; }
+  .footer {
+    margin-top: 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 11.5px;
+    letter-spacing: 1.6px;
+    color: rgba(243, 234, 212, 0.4);
+  }
+  @media (max-width: 600px) {
+    .pending { padding: 40px 24px 32px; }
+    h1 { font-size: 32px; letter-spacing: 2.8px; }
+    .sub { font-size: 16px; }
+    .body-text { font-size: 15.5px; }
+    .timeline-row { flex-direction: column; gap: 4px; }
+    .timeline-label { width: auto; }
+  }
+</style>
+</head>
+<body>
+  <div class="pending">
+    <div class="monogram">
+      <img src="https://cfudscwjilmvunusoolg.supabase.co/storage/v1/object/public/codex-audios/codex-seal.jpg.png" alt="">
+    </div>
+    <div class="eyebrow">Almost there</div>
+    <h1>Your Codex<br>Is Waiting.</h1>
+    <p class="sub">Your payment is being confirmed.</p>
+    <div class="divider"></div>
+
+    <p class="body-text">
+      The moment your payment clears, the Codex opens automatically. You'll receive an <strong>email with your access link</strong> at the address you used at checkout — keep an eye on your inbox (and the spam folder, just in case).
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-row">
+        <div class="timeline-label">Card</div>
+        <div class="timeline-time">Usually clears within minutes.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-label">PayPal</div>
+        <div class="timeline-time">Usually clears within minutes.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-label">Pix</div>
+        <div class="timeline-time">Confirms instantly once paid.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-label">Bank Transfer</div>
+        <div class="timeline-time">May take a few hours, sometimes up to 3 business days.</div>
+      </div>
+    </div>
+
+    <div class="note">
+      You don't need to do anything right now. The Codex will be released to you automatically the moment <strong>Hotmart confirms the payment</strong>. If you don't receive the access email within the timeframes above, just write to us.
+    </div>
+
+    <p class="contact">
+      Need help? <a href="mailto:spiritualsignalhelp@gmail.com">spiritualsignalhelp@gmail.com</a>
+    </p>
+
+    <p class="footer">Author · The Chosen Origin · © 2026</p>
+  </div>
+</body>
+</html>
