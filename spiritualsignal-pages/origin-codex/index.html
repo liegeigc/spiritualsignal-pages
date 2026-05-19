@@ -503,13 +503,27 @@
     @keyframes exitSlideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     .exit-popup-close {
       position: absolute; top: 14px; right: 18px;
-      background: none; border: none;
+      background: rgba(6, 11, 20, 0.55); border: 1px solid rgba(201, 162, 75, 0.35);
+      width: 32px; height: 32px; border-radius: 50%;
       color: var(--gold-soft);
-      font-size: 28px; cursor: pointer; line-height: 1;
-      opacity: 0.55; transition: opacity 0.2s;
+      font-size: 20px; cursor: pointer; line-height: 1;
+      opacity: 0.85; transition: opacity 0.2s;
       font-family: 'Inter', sans-serif;
+      z-index: 3;
+      display: flex; align-items: center; justify-content: center;
     }
     .exit-popup-close:hover { opacity: 1; }
+    .exit-popup-image {
+      display: block;
+      width: calc(100% + 80px);
+      height: 240px;
+      object-fit: cover;
+      object-position: center 28%;
+      margin: -52px -40px 28px -40px;
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+      box-shadow: inset 0 -60px 60px -20px var(--midnight);
+    }
     .exit-eyebrow {
       font-family: 'Inter', sans-serif;
       font-size: 11px; font-weight: 600;
@@ -605,6 +619,11 @@
     }
     @media (max-width: 600px) {
       .exit-popup-modal { padding: 40px 22px 26px; }
+      .exit-popup-image {
+        width: calc(100% + 44px);
+        height: 200px;
+        margin: -40px -22px 22px -22px;
+      }
       .exit-title { font-size: 21px; }
       .exit-body { font-size: 15.5px; }
       .exit-price-new { font-size: 46px; }
@@ -912,6 +931,93 @@
   updateCountdown();
 </script>
 
-<!-- Exit-intent popup removed from sales page (2026-05-18) — discount agora é configurado direto no checkout do Hotmart -->
+<!-- ============== EXIT-INTENT POPUP (mobile only) ============== -->
+<div class="exit-popup" id="exitPopup" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="exit-popup-modal">
+    <button class="exit-popup-close" aria-label="Close" type="button">×</button>
+    <img class="exit-popup-image" src="IMAGENS/exit-popup-codex-seer.png" alt="The Chosen — Origin">
+    <div class="exit-eyebrow">⊹ Wait ⊹</div>
+    <h3 class="exit-title">You Haven't Crossed Yet</h3>
+    <div class="exit-divider"></div>
+    <p class="exit-body">The threshold closes the moment you leave this page. <strong>Take this with you</strong> — a single chance to enter The Origin Codex at a lower price.</p>
+    <div class="exit-price-box">
+      <span class="exit-price-old">$25</span>
+      <div class="exit-price-new"><span class="currency">$</span>19</div>
+      <span class="exit-save-badge">Save $6 · One-time</span>
+    </div>
+    <p class="exit-disclaimer">This price closes when this page closes. There is no second offer.</p>
+    <a class="exit-cta" href="https://pay.hotmart.com/G105790743F?off=68xqefll&checkoutMode=10">Yes — Open the Codex for $19 →</a>
+    <div class="exit-footer">7-day guarantee · Instant access</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const popup = document.getElementById('exitPopup');
+  if (!popup) return;
+
+  // Mobile only
+  if (window.innerWidth >= 768) return;
+
+  // Once per session
+  if (sessionStorage.getItem('exitPopupFired') === '1') return;
+
+  const PAGE_LOAD = Date.now();
+  const MIN_TIME_MS = 20000;
+  let fired = false;
+
+  function fire() {
+    if (fired) return;
+    if (Date.now() - PAGE_LOAD < MIN_TIME_MS) return;
+    fired = true;
+    sessionStorage.setItem('exitPopupFired', '1');
+    popup.classList.add('active');
+    popup.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    popup.classList.remove('active');
+    popup.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  popup.querySelector('.exit-popup-close').addEventListener('click', close);
+  popup.addEventListener('click', function (e) {
+    if (e.target === popup) close();
+  });
+
+  // Trigger 1: scroll-up rápido (delta > 60px em < 350ms) — após 20s
+  let lastScroll = window.scrollY;
+  let lastTime = Date.now();
+  window.addEventListener('scroll', function () {
+    const now = Date.now();
+    const dy = window.scrollY - lastScroll;
+    const dt = now - lastTime;
+    if (dy < -60 && dt > 0 && dt < 350) {
+      fire();
+    }
+    lastScroll = window.scrollY;
+    lastTime = now;
+  }, { passive: true });
+
+  // Trigger 2: visibilitychange (trocou de aba / minimizou) — após 20s
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') {
+      fire();
+    }
+  });
+
+  // Trigger 3: botão "voltar" do celular (pushState + popstate) — após 20s
+  // Adiciona um estado extra na história. Primeiro "voltar" dispara popstate (mostra popup);
+  // segundo "voltar" realmente sai da página.
+  try {
+    history.pushState({ exitGate: true }, '');
+  } catch (err) { /* noop */ }
+  window.addEventListener('popstate', function () {
+    fire();
+  });
+})();
+</script>
 </body>
 </html>
